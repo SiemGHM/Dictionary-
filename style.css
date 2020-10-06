@@ -54,7 +54,7 @@ nav ul li a{
 .user{
     display: flex;
     align-items: center;
-    color: white;
+    color: #fff;
     font-size: 14px;
 }
 
@@ -64,3 +64,86 @@ nav ul li a{
     cursor: pointer;
 }
 
+.sidebar {
+    width: 155px;
+    height:100vh;
+    background: rgba(29,31,58,0.5);
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.search-icon {
+    width: 20px;
+    display:block;
+    margin: 220px auto 0;
+}
+
+.social-links{
+    width: 20px;
+    display: block;
+    margin: 220px auto 0;
+    text-align: center;
+}
+
+
+.social-links img{
+    height: 15px;
+    margin-bottom: 30px;
+
+ }
+
+
+ .info-icon{
+     width: 20px;
+     position: absolute;
+     left:50%;
+     bottom: 30px;
+     transform: translateX(-50%);
+ }
+
+
+ .msg-container {
+     width: 600px;
+     height: 280px;
+     position: absolute;
+     left: 14%;
+     top: 57%;
+     transform: translateY(-50%)
+ }
+
+
+ #slider{
+     display: inline-flex;
+
+ }
+
+ .msg-col {
+     width: 600px;
+     height:280px;
+ }
+
+
+ .msg-col h1{
+     color: #fff;
+     font-size: 80px;
+     font-weight: 100;
+     margin: 10px;
+ }
+
+ .msg-col p{
+     color: #ddd;
+     font-size: 15px;
+     line-height: 25px;
+ }
+
+ .msg-col a{
+     display: inline-block;
+     text-decoration: none;
+     color: #555;
+     background: #fff;
+     font-size: 15px;
+     padding: 10px 35px;
+     border-radius: 30px;
+     margin-top:25px;
+ }
