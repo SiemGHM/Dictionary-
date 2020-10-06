@@ -65,18 +65,54 @@
                          I can add some more if you want me to? By the way there are other words comming too.</p>
                     <a href="">Know it</a>
                 </div>
-                <div class="msg-col">
-                    <h1> opportunity </h1>
-                    <p>: chance.
-                         It has alot of other meanings too but those are enough for today I guess. I mean 
-                         I can add some more if you want me to? By the way there are other words comming too.</p>
-                    <a href="">Know it</a>
-                </div>
+
+            </div>
+                
         </div>
+
+        <div class="controller">
+            <div id="line1"></div>
+            <div id="line2"></div>
+            <div id="line3"></div>
+            <div id="line4"></div>
+            <div id="active"></div>
+
+        </div>
+
 
 
         
     </div>
+
+    <script>
+        var slider =document.getElementById('slider');
+        var active =document.getElementById('active');
+        var line1= document.getElementById('line1');
+        var line2 =document.getElementById('line2');
+        var line3 =document.getElementById('line3');
+        var line4 =document.getElementById('line4');
+
+
+        line1.onclick = function(){
+            slider.style.transform= 'translateX(0)';
+            }
+
+        line2.onclick = function(){
+            slider.style.transform= 'translateX(-25)';
+            }
+        
+        line3.onclick = function(){
+            slider.style.transform= 'translateX(-50)';
+            }
+        
+        line4.onclick = function(){
+            slider.style.transform= 'translateX(-75)';
+            }
+        
+
+
+    </Script>
+
 
 </body>
 </html>
