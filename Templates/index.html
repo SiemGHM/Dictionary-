@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dictionary</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block body %}
+
     <div class="container">
         <div class="navbar">
             <div class="logo">
-                <img src="images/logo.png">                
+                <img src="static/images/logo.png">                
             </div>
             <nav>
                 <ul>
@@ -22,17 +18,17 @@
             </nav>
             <div class="user">
                 <p>Siem Girmay</p>
-                <img src="images/user.png">
+                <img src="static/images/user.png">
             </div>
         </div>
         <div class="sidebar">
-            <img src="images/search.png" class="search-icon">
+            <img src="static/images/search.png" class="search-icon">
             <div class="social-links">
-                <!a href="https://twitter.com/siemghirmai"><img src="images/tw.png" ></a>
-                <img src="images/pt.png">
-                <img src="images/fb.png">
+                <!a href="https://twitter.com/siemghirmai"><img src="static/images/tw.png" ></a>
+                <img src="static/images/pt.png">
+                <img src="static/images/fb.png">
             </div>
-            <img src="images/info.png" class="info-icon">
+            <img src="static/images/info.png" class="info-icon">
         </div>
 
         <div class="msg-container">
@@ -116,5 +112,6 @@
     </Script>
 
 
-</body>
-</html>
+{% endblock %}
+
+
