@@ -118,6 +118,7 @@ nav ul li a{
 
  #slider{
      display: inline-flex;
+     transition: 2s;
      
 
  }
