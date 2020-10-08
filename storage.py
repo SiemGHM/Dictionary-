@@ -35,3 +35,26 @@ res = json.loads(answer)
 print(res["results"][0]["lexicalEntries"][0]['entries'][0]['senses'][0]['definitions'][0])
 
 
+
+
+
+
+#print("code {}\n".format(r.status_code))
+    #print("text \n" + r.text)
+#print("json \n" + json.dumps(r.json()))
+
+    #answer=r.text
+
+# using json.loads() 
+# convert dictionary string to dictionary 
+    #res = json.loads(answer)
+
+
+#print(answers["results"])
+
+#print(type(res))
+
+#print(getMeaning('council')["results"][0]["lexicalEntries"][0]['entries'][0]['senses'][0]['definitions'][0])
+
+
+
