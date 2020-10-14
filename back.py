@@ -138,11 +138,4 @@ if __name__=='__main__':
 
 #================================================Test Commands====================================================
 
-genTenWords()
 
-for w in words:
-    print(words[w])   
-    # 
-    # 
-    # 
-print(len(words)) 
