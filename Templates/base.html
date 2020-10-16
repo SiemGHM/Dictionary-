@@ -30,6 +30,7 @@ body,html
     position: relative;
     padding-top: 30px;
     box-sizing: border-box ;
+    background-attachment: fixed;
 } 
 
 .navbar{
@@ -232,11 +233,93 @@ nav ul li a{
      line-height: 30px;
  }
 
+
+ .IPA {
+     color: #fff;
+     width: auto;
+     margin-left: 10%;
+     margin-right: 10%;
+     padding: 5%;
+     /* background-color: rgba(30, 30, 50, 0.182); */
+
+     
+ }
+ .semi {
+    color: #fff;
+     width: auto;
+     margin-left: 15%;
+     margin-right: 15%;
+     padding: 5%;
+
+ }
+
+ .IPA h2,h3{
+     text-align: center;
+ }
+
+ table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid rgb(226, 214, 214);
+  padding-right: 3%;
+  padding-left:1%;
+  width: auto;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.pronoun{
+    font-size: 0.35em;
+}
+
+ /* table {
+     width:60%;}
+
+ table, th, td {
+  border: 1px solid rgb(226, 214, 214);
+  padding-right: 3%;
+  padding-left:1%;
+  width: auto;
+  margin-left: 20%;
+  margin-right: 20%;
+} */
+
     </style>
     <!link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css.css')}}">
 </head>
 <body>
+    
     <div class="container">
+        <div class="screen">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="/"><img src="static/images/logo.png"></a>               
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Library</a></li>
+                        <li><a href="/IPA">IPA</a></li>
+                        <li><a href="">Contact</a></li>
+        
+                    </ul>
+                </nav>
+                <div class="user">
+                    <p>Siem Girmay</p>
+                    <img src="static/images/user.png">
+                </div>
+            </div>
+            <div class="sidebar">
+                <img src="static/images/search.png" class="search-icon">
+                <div class="social-links">
+                    <a href="https://twitter.com/siemghirmai"><img src="static/images/tw.png" ></a>
+                    <img src="static/images/pt.png">
+                    <img src="static/images/fb.png">
+                </div>
+                <img src="static/images/info.png" class="info-icon">
+            </div>
         {% block body %}
 
         {% endblock %}
