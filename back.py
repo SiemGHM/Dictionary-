@@ -3,8 +3,8 @@ import requests
 import json
 import random
 
-app_id = '5447e8b7'
-app_key = '368b6762ad54758733d7d3a8875ed889'
+app_id = '3a4acdc9'
+app_key = '2862ea45ca0cf3b2bcaeccf833903309'
 
 language = 'en-gb'
 #word_id = 'prone'
@@ -118,6 +118,7 @@ def getWord():
             WordC=res["results"][0]["lexicalEntries"][0]['lexicalCategory']['text']
             pron=res2["results"][0]["lexicalEntries"][0]['entries'][0]['pronunciations'][0]['phoneticSpelling']
             print("5")
+            randWord = res["results"][0]["word"]
             print(randWord,resp, WordC,pron)
             wM=[randWord,resp,WordC,pron]
             print('3')
@@ -177,6 +178,31 @@ def home():
 @app.route('/IPA')
 def ipa():
     return render_template("IPA.html")
+
+@app.route('/lookup')
+def lookup():
+    return render_template("lu.html")
+
+@app.route('/lookupr', methods=['POST','GET'])
+def lookupr():
+    word = request.form['myCountry']
+    fields = 'definitions'
+    fields2 = 'pronunciations'
+    strictMatch = 'false'
+
+    url = 'https://od-api.oxforddictionaries.com:443/api/v2/entries/' + language + '/' + word.lower() + '?fields=' + fields + '&strictMatch=' + strictMatch;
+    
+    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    
+    answer=r.text
+    
+    rescode=int(str(r.status_code).strip())
+    res = json.loads(answer)
+
+    if rescode != 404:
+        return render_template("lur.html", response = res["results"][0]["lexicalEntries"][0]['entries'][0]['senses'][0]['definitions'])
+    else:
+        return render_template("lur.html")
 
 
 

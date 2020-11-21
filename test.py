@@ -1,17 +1,42 @@
-with open('temp.txt','w') as open:
-    n=1
-    x=0
-    for i in range(10):
-        print('P'+str(n)+'  = '+'P['+str(x)+"], ",file=open, end='' )
-        n+=1
-        x+=1
-
-    print(' ', file=open)
-
-    n=1
-    for i in range(10):
-        print('P'+str(n)+' = 0 ',file=open,  )
-        n+=1
 
 
-n=50
+
+# <script>
+#   $( function() {
+#     var availableTags = [
+#       "ActionScript",
+#       "AppleScript",
+#       "Asp",
+#       "BASIC",
+#       "C",
+#       "C++",
+#       "Clojure",
+#       "COBOL",
+#       "ColdFusion",
+#       "Erlang",
+#       "Fortran",
+#       "Groovy",
+#       "Haskell",
+#       "Java",
+#       "JavaScript",
+#       "Lisp",
+#       "Perl",
+#       "PHP",
+#       "Python",
+#       "Ruby",
+#       "Scala",
+#       "Scheme"
+#     ];
+#     $( "#tags" ).autocomplete({
+#       source: availableTags
+#     });
+#   } );
+#   </script>
+
+
+
+with open('dict.txt', 'r') as f:
+    with open('siem.txt','a') as p:
+        for i in f:
+            i = i.strip()
+            print('"{}",'.format(i), end = "", file=p)

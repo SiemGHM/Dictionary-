@@ -274,6 +274,97 @@ table, th, td {
     font-size: 0.35em;
 }
 
+.msg-col{
+    position: relative;
+}
+
+.msg-col .knowIt{
+    position: absolute;
+    bottom: 30px;
+    left: 70px;
+}
+
+div .lu {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    position: absolute;
+    top: 30vh;
+    left: 25vw;
+    height: 70px;
+}
+
+div .lu .gerie{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 53, 53, 0.7);
+    outline: none;
+    font-size: xx-large;
+    border-radius: 35px;
+    padding-left: 40px;
+    color:white;
+}
+
+div .lur {
+    margin: auto;
+    width: 30%;
+    padding: 10px;
+    position: absolute;
+    top: 15vh;
+    left: 30vw;
+    height: 42px;
+}
+
+div .lur .gerier{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 53, 53, 0.7);
+    outline: none;
+    font-size: xx-large;
+    border-radius: 21px;
+    padding-left: 24px;
+    color:white;
+}
+
+
+
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 40px;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+
+.dictresp {
+    color: white;
+}
+
+
+
  /* table {
      width:60%;}
 
@@ -312,7 +403,7 @@ table, th, td {
                 </div>
             </div>
             <div class="sidebar">
-                <img src="static/images/search.png" class="search-icon">
+                <a href="/lookup"><img src="static/images/search.png" class="search-icon"></a>
                 <div class="social-links">
                     <a href="https://twitter.com/siemghirmai"><img src="static/images/tw.png" ></a>
                     <img src="static/images/pt.png">
