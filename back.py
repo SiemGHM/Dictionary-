@@ -57,6 +57,15 @@ Ms=[M1, M2, M3, M4, M5, M6, M7, M8, M9, M10]
 WC=[WC1,WC2,WC3,WC4,WC5,WC6,WC7,WC8,WC9,WC10]
 P=[P1 ,P2 ,P3 ,P4 ,P5 ,P6 ,P7 ,P8 ,P9 ,P10]
 
+wordList=[]
+with open("dict.txt",'r') as file:
+
+    for line in file:
+        word = line.strip()
+        wordList.append(word)
+
+# print(wordList)
+
 
 app=Flask(__name__)
 app.secret_key="heythere"
@@ -68,13 +77,8 @@ app.secret_key="heythere"
 
 
 def getWord():
-    wordList=[]
-    with open("dict.txt",'r') as file:
-
-        for line in file:
-            word = line.strip()
-            wordList.append(word)
-    wordList = wordList
+    
+    
     
     num=len(wordList)
     randnum=num*random.random()
@@ -90,6 +94,7 @@ def getWord():
     
     rescode=int(str(r.status_code).strip())
     res = json.loads(answer)
+    print(res)
     
     
     
@@ -200,7 +205,7 @@ def lookupr():
     res = json.loads(answer)
 
     if rescode != 404:
-        return render_template("lur.html", response = res["results"][0]["lexicalEntries"][0]['entries'][0]['senses'][0]['definitions'])
+        return render_template("lur.html", response = res["results"][0]["lexicalEntries"][0]['entries'][0]['senses'][0]['definitions'],res=res)
     else:
         return render_template("lur.html")
 

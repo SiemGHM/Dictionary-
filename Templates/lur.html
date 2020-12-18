@@ -8,10 +8,31 @@
       <input type='submit'>
       <div class = "dictresp" >
         {{response}}
-        {% for res in response  %}
+        {% for dict in res.results  %}
+        <h3>{{dict.word}}</h3>
+        {% for dict1 in dict.lexicalEntries %} 
+        <p>{{dict1.lexicalCategory.text}}</p>
+
+        {% for dict2 in dict1.entries %}
+        {% for dict3 in dict2.senses %}
+        {% for dict4 in dict3.definitions %}
+
+        
         <div>
-          {{res}}
+          {{dict4}}
         </div>
+
+        {% for dict5 in dict4.subsenses %}
+        <div>
+          {{ dict5.definition }}
+        </div>        
+
+
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
         {% endfor %}
       </div>
     </div>
