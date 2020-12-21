@@ -1,10 +1,11 @@
 from flask import Flask,render_template, request, request, url_for, session
+import pymysql
 import requests
 import json
 import random
 
-app_id = '3a4acdc9'
-app_key = '2862ea45ca0cf3b2bcaeccf833903309'
+app_id = '46f8fc36'
+app_key = '43adc50a2f3ba559f46f7ab46176eed1'
 
 language = 'en-gb'
 #word_id = 'prone'
@@ -57,6 +58,44 @@ Ms=[M1, M2, M3, M4, M5, M6, M7, M8, M9, M10]
 WC=[WC1,WC2,WC3,WC4,WC5,WC6,WC7,WC8,WC9,WC10]
 P=[P1 ,P2 ,P3 ,P4 ,P5 ,P6 ,P7 ,P8 ,P9 ,P10]
 
+
+
+def mysqlcon(query):
+    conn = pymysql.connect( 
+        host='localhost', 
+        user='SiemGHM',  
+        password = "$iemGH12", 
+        db='dexdb',
+        autocommit=True 
+        )
+
+    cur = conn.cursor() 
+    cur.execute(query) 
+    output = cur.fetchall() 
+    return output 
+      
+    # To close the connection 
+    conn.commit()
+    conn.close()
+
+def dictDB(word):
+    query = "select word, Meaning, WordCat, wordPro, def_res, pro_res from word where word='{}'".format(word)
+    conn = pymysql.connect( 
+        host='localhost', 
+        user='SiemGHM',  
+        password = "$iemGH12", 
+        db='dexdb',
+        autocommit=True 
+        )
+
+    cur = conn.cursor() 
+    cur.execute(query) 
+    output = cur.fetchall() 
+    conn.close()
+    return output
+
+
+
 wordList=[]
 with open("dict.txt",'r') as file:
 
@@ -77,7 +116,9 @@ app.secret_key="heythere"
 
 
 def getWord():
-    
+
+
+        
     
     
     num=len(wordList)
@@ -85,6 +126,15 @@ def getWord():
     randnum=int(randnum)
     print(randnum)
     randWord=wordList[(randnum-1)]
+    wordM = dictDB(randWord)
+    if wordM:
+        word = wordM[0][0]
+        resp = wordM[0][1]
+        wc = wordM[0][2]
+        prn = wordM[0][3]
+        wM=[word,resp,wc,prn]
+        return wM
+
     word_id= randWord
     url = 'https://od-api.oxforddictionaries.com:443/api/v2/entries/' + language + '/' + word_id.lower() + '?fields=' + fields + '&strictMatch=' + strictMatch;
     
@@ -124,9 +174,15 @@ def getWord():
             pron=res2["results"][0]["lexicalEntries"][0]['entries'][0]['pronunciations'][0]['phoneticSpelling']
             print("5")
             randWord = res["results"][0]["word"]
-            print(randWord,resp, WordC,pron)
+            #print(randWord,resp, WordC,pron)
             wM=[randWord,resp,WordC,pron]
             print('3')
+            query = "insert into word (word, Meaning, WordCat, wordPro, def_res, pro_res) values ('{}','{}','{}','{}','{}','{}')".format(randWord, resp, WordC, pron, json.dumps(res),pron)
+            #query = query.replace("'", "''")
+            print(query)
+            out = mysqlcon(query)
+            print(out)
+
             return wM
         except:
             return getWord()
