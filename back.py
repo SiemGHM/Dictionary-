@@ -4,8 +4,8 @@ import requests
 import json
 import random
 
-app_id = '46f8fc36'
-app_key = '43adc50a2f3ba559f46f7ab46176eed1'
+app_id = 'ae2a9fbf'
+app_key = '55030cea23f3f744321cab69b2a5ffbd'
 
 language = 'en-gb'
 #word_id = 'prone'
@@ -95,6 +95,27 @@ def dictDB(word):
     return output
 
 
+def signupdb(name, lname, username, email, password):
+    query = "insert into users (username,email, passwd) values ('{}','{}','{}')".format(username, email, password)
+    ex = mysqlcon(query)
+    uID = mysqlcon("select UserID from users where username='{}'".format(username))
+    query = "insert into Customers (UserID, fname, lname) values ('{}','{}','{}')".format(uID[0][0],name, lname)
+    ex = mysqlcon(query)
+
+
+def lncheck(email,password):
+    pw = mysqlcon("select passwd from users where email='{}'".format(email))
+    print(pw)
+    
+    if pw:
+        if password == pw[0][0]:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
 
 wordList=[]
 with open("dict.txt",'r') as file:
@@ -124,8 +145,9 @@ def getWord():
     num=len(wordList)
     randnum=num*random.random()
     randnum=int(randnum)
-    print(randnum)
+    
     randWord=wordList[(randnum-1)]
+    print(randnum,randWord)
     wordM = dictDB(randWord)
     if wordM:
         word = wordM[0][0]
@@ -159,6 +181,7 @@ def getWord():
     
     
     if sumrescode==400:
+        res2=json.loads(answer2)
         print('1')
         
         
@@ -264,6 +287,45 @@ def lookupr():
         return render_template("lur.html", response = res["results"][0]["lexicalEntries"][0]['entries'][0]['senses'][0]['definitions'],res=res)
     else:
         return render_template("lur.html")
+
+
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+    
+
+@app.route('/signupr', methods=['POST', 'GET'])
+def signupr():
+    name = request.form['fname']
+    lname = request.form['lname']
+    username = request.form['username']
+    email = request.form['email']
+    passwrd = request.form['password']
+    try:
+        signupdb(name, lname, username, email, passwrd)
+        return "Account created"
+    except:
+        return "Username or email already exists"
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/loginr', methods=['POST','GET'])
+def loginr():
+    email = request.form['email']
+    password = request.form['password']
+    c=lncheck(email,password)
+
+    if c:
+        return 't'
+    # try:
+    else:
+        return 'n'
+        
 
 
 

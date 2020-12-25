@@ -7,7 +7,7 @@
       <input id="myInput" type="text" name="myCountry" placeholder="Search for a Word" class="gerier">
       <input type='submit'>
       <div class = "dictresp" >
-        {{response}}
+        
         {% for dict in res.results  %}
         <h3>{{dict.word}}</h3>
         {% for dict1 in dict.lexicalEntries %} 

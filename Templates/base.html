@@ -82,6 +82,7 @@ nav ul li a{
     width: 30px;
     margin-left: 15px;
     cursor: pointer;
+    border-radius: 13px;
 }
 
 .sidebar {
@@ -363,6 +364,45 @@ div .lur .gerier{
     color: white;
 }
 
+.signup {
+    color: whitesmoke;
+    margin: 0 auto;
+    width: 60%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    border: 4px black solid;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.082);
+}
+
+.signup h2{
+    /* position: absolute;
+    top: 20px; */
+    margin-bottom: 20px;
+
+}
+
+form .myInput{
+    margin-bottom: 10px;
+    background-color: rgba(167, 163, 163,0.82);
+    outline: none;
+    height: 30px;
+    width: 300px;
+    border-radius: 10px;
+    font-size: 16px;
+    padding-left: 20px;
+}
+
+form p{
+    padding-right: 10px;
+}
+
+.user a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+
 
 
  /* table {
@@ -398,8 +438,8 @@ div .lur .gerier{
                     </ul>
                 </nav>
                 <div class="user">
-                    <p>Siem Girmay</p>
-                    <img src="static/images/user.png">
+                    <a href="/login"><p>Log In</p></a>
+                    <a href="/login"><img src="static/images/nopror.png"></a>
                 </div>
             </div>
             <div class="sidebar">
@@ -416,6 +456,13 @@ div .lur .gerier{
         {% endblock %}
     </div>
     
+
+    <script>
+        function knowIt() {
+            var word = document.getElementById('#w1')
+            console.log(word)
+        }
+    </script>
     </body>
 </html>
 
