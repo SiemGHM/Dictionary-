@@ -1,11 +1,15 @@
-from flask import Flask,render_template, request, request, url_for, session
+from flask import Flask,render_template, request, request, url_for, session, jsonify, make_response, redirect 
+from flask_login import logout_user
 import pymysql
 import requests
 import json
 import random
+import time
+import api
 
-app_id = 'ae2a9fbf'
-app_key = '55030cea23f3f744321cab69b2a5ffbd'
+
+app_id = api.apiid
+app_key = api.key
 
 language = 'en-gb'
 #word_id = 'prone'
@@ -79,7 +83,7 @@ def mysqlcon(query):
     conn.close()
 
 def dictDB(word):
-    query = "select word, Meaning, WordCat, wordPro, def_res, pro_res from word where word='{}'".format(word)
+    query = "select word, Meaning, WordCat, wordPro from word where word='{}'".format(word)
     conn = pymysql.connect( 
         host='localhost', 
         user='SiemGHM',  
@@ -104,12 +108,12 @@ def signupdb(name, lname, username, email, password):
 
 
 def lncheck(email,password):
-    pw = mysqlcon("select passwd from users where email='{}'".format(email))
+    pw = mysqlcon("select passwd, username from users where email='{}'".format(email))
     print(pw)
     
     if pw:
         if password == pw[0][0]:
-            return True
+            return [True, pw[0][1]]
         else:
             return False
     else:
@@ -117,18 +121,20 @@ def lncheck(email,password):
 
 
 
-wordList=[]
-with open("dict.txt",'r') as file:
+# wordList=[]
+# with open("dict.txt",'r') as file:
 
-    for line in file:
-        word = line.strip()
-        wordList.append(word)
+#     for line in file:
+#         word = line.strip()
+#         wordList.append(word)
 
 # print(wordList)
 
 
 app=Flask(__name__)
-app.secret_key="heythere"
+app.secret_key="9dddnJbLcF44kyQx2KTT0w"
+
+
 
 
 
@@ -136,28 +142,43 @@ app.secret_key="heythere"
 
 
 
-def getWord():
+def getWord(wordin = None):
 
 
-        
+    c=  time.time()
     
     
-    num=len(wordList)
-    randnum=num*random.random()
-    randnum=int(randnum)
-    
-    randWord=wordList[(randnum-1)]
-    print(randnum,randWord)
-    wordM = dictDB(randWord)
+    # num=len(wordList)
+    # randnum=num*random.random()
+    # randnum=int(randnum)
+    if wordin:
+        word_id = wordin
+    else:
+        rw = "SELECT word FROM wlist AS t1 JOIN (SELECT wlid FROM wlist ORDER BY RAND() LIMIT 1) as t2 ON t1.wlid=t2.wlid"
+
+        word_id = mysqlcon(rw)
+        word_id=word_id[0][0]
+
+
+    wordM = dictDB(word_id)
     if wordM:
+        dbi = time.time()
+        print("""we are actualy using the database ############################################################################################################################
+        ###########################################################################################
+        # #########
+        # ##############
+        # ############""")
         word = wordM[0][0]
         resp = wordM[0][1]
         wc = wordM[0][2]
         prn = wordM[0][3]
         wM=[word,resp,wc,prn]
+        tbf = time.time()
+        print(tbf-dbi)
+        print(tbf-c, "This is the real shit")
         return wM
 
-    word_id= randWord
+    
     url = 'https://od-api.oxforddictionaries.com:443/api/v2/entries/' + language + '/' + word_id.lower() + '?fields=' + fields + '&strictMatch=' + strictMatch;
     
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
@@ -165,51 +186,45 @@ def getWord():
     answer=r.text
     
     rescode=int(str(r.status_code).strip())
-    res = json.loads(answer)
-    print(res)
+    res = json.loads(answer) 
     
-    
-    
-    #print(answer2)
     url2 = 'https://od-api.oxforddictionaries.com:443/api/v2/entries/' + language + '/' + word_id.lower() + '?fields=' + fields2 + '&strictMatch=' + strictMatch;
     r2 = requests.get(url2, headers = {'app_id': app_id, 'app_key': app_key})
     answer2=r2.text
     rescode2=int(str(r2.status_code).strip())
     res2=json.loads(answer2)
     sumrescode=(rescode+rescode2)
-    print(sumrescode)
+    
     
     
     if sumrescode==400:
         res2=json.loads(answer2)
-        print('1')
         
-        
-        print(word_id)
-        
-        
-        #print(answer2)
-        print('2')
         try:
+            e = time.time()
             resp=res["results"][0]["lexicalEntries"][0]['entries'][0]['senses'][0]['definitions'][0]
-            print('4')
             WordC=res["results"][0]["lexicalEntries"][0]['lexicalCategory']['text']
             pron=res2["results"][0]["lexicalEntries"][0]['entries'][0]['pronunciations'][0]['phoneticSpelling']
-            print("5")
             randWord = res["results"][0]["word"]
-            #print(randWord,resp, WordC,pron)
+            
             wM=[randWord,resp,WordC,pron]
-            print('3')
+            
             query = "insert into word (word, Meaning, WordCat, wordPro, def_res, pro_res) values ('{}','{}','{}','{}','{}','{}')".format(randWord, resp, WordC, pron, json.dumps(res),pron)
-            #query = query.replace("'", "''")
-            print(query)
+            
+            
             out = mysqlcon(query)
-            print(out)
+
+            d = time.time()
+            print(c-d)
+            print(d-e)
+            
 
             return wM
         except:
             return getWord()
     else:
+        q = "delete from wlist where word='{}'".format(word_id)
+        mysqlcon(q)
         return getWord()
 
 
@@ -218,13 +233,20 @@ def getWord():
 
 
 def genTenWords():
+    ws = "SELECT word FROM wlist AS t1 JOIN (SELECT wlid FROM wlist ORDER BY RAND() LIMIT 10) as t2 ON t1.wlid=t2.wlid"
+    z=0
+    ws =mysqlcon(ws)
+    print(ws)
     for w in words:
-        new=getWord()
-        print(type(new))
+        print(ws[z][0])
+        new=getWord(ws[z][0])
+        print(new)
         words[w]=new
+        z+=1
+        print(words)
         
     
-    
+    print('done')
     return words
 
 
@@ -232,8 +254,10 @@ def genTenWords():
 
 genTenWords()
 
+
+
 for w in words:
-    print(words[w])   
+    print(words[w], 'g vhjkgvbbuibytvi')   
     # 
     # 
     # 
@@ -253,10 +277,11 @@ for w in words:
 
 
 #============================================Flask webapp stars here =========================================================
-
+@app.route("/home")
 @app.route("/")
 def home():
-    return render_template("index.html",W1 = Ws[0], W2 = Ws[1], W3 = Ws[2], W4 = Ws[3], W5 = Ws[4], W6 = Ws[5], W7 = Ws[6], W8 = Ws[7], W9 = Ws[8], W10 = Ws[9], M1 = Ms[0], M2 = Ms[1], M3 = Ms[2], M4 = Ms[3], M5 = Ms[4], M6 = Ms[5], M7 = Ms[6], M8 = Ms[7], M9 = Ms[8], M10 = Ms[9],WC1 = WC[0], WC2 = WC[1], WC3 = WC[2], WC4 = WC[3], WC5 = WC[4], WC6 = WC[5], WC7 = WC[6], WC8 = WC[7], WC9 = WC[8], WC10 = WC[9], P1  = P[0], P2  = P[1], P3  = P[2], P4  = P[3], P5  = P[4], P6  = P[5], P7  = P[6], P8  = P[7], P9  = P[8], P10  = P[9])
+    user = "Log In"
+    return render_template("index.html",W1 = Ws[0], W2 = Ws[1], W3 = Ws[2], W4 = Ws[3], W5 = Ws[4], W6 = Ws[5], W7 = Ws[6], W8 = Ws[7], W9 = Ws[8], W10 = Ws[9], M1 = Ms[0], M2 = Ms[1], M3 = Ms[2], M4 = Ms[3], M5 = Ms[4], M6 = Ms[5], M7 = Ms[6], M8 = Ms[7], M9 = Ms[8], M10 = Ms[9],WC1 = WC[0], WC2 = WC[1], WC3 = WC[2], WC4 = WC[3], WC5 = WC[4], WC6 = WC[5], WC7 = WC[6], WC8 = WC[7], WC9 = WC[8], WC10 = WC[9], P1  = P[0], P2  = P[1], P3  = P[2], P4  = P[3], P5  = P[4], P6  = P[5], P7  = P[6], P8  = P[7], P9  = P[8], P10  = P[9], user=user)
     
 
 @app.route('/IPA')
@@ -321,12 +346,118 @@ def loginr():
     c=lncheck(email,password)
 
     if c:
-        return 't'
+        user = c[1]
+        
+        session["user"] = user
+        
+
+        return user #redirect(url_for('index'))
     # try:
     else:
         return 'n'
+
+
+@app.route('/knowit', methods=['GET', 'POST'])
+def knowit():
+    if "user" not in session:
+        return redirect(url_for('login')) 
+    user = session["user"]
+    famword = request.form['word1']
+    famword = famword.strip()
+    print(famword)
+    wid = mysqlcon("select wordid from word where word='{}'".format(famword))
+    print(wid)
+    kq = "insert into knows (cusid, wordid) value ((select cusid from customers c, users u where username = '{}' and u.userid = c.userid),{})".format(user, wid[0][0])
+    fam = mysqlcon(kq)
+    
+
+    ws = "SELECT word FROM wlist AS t1 JOIN (SELECT wlid FROM wlist ORDER BY RAND() LIMIT 1) as t2 ON t1.wlid=t2.wlid"
+    z=0
+    ws =mysqlcon(ws)
+    qren = "select w.word, w.Meaning, w.WordCat, w.wordPro from word w inner join (select r.wordid from rendered r natural left join knows k where k.wordid is NULL and r.cusid=(select cusid from customers c, users u where username = '{}' and u.userid = c.userid) order by rtime desc limit 9) as w2 on w.wordid = w2.wordid".format(user)
+    wordM = mysqlcon(qren)
+    print(wordM)
+    print(ws)
+    z=0
+    for w in words:
+        if w == 'word10':
+            new = getWord(ws[0][0])
+            words[w]= new
+            print(words[w][0][0])
+            wid = mysqlcon("select wordid from word where word='{}'".format(words[w][0]))
+            kq = "insert into rendered (cusid, wordid) value ((select cusid from customers c, users u where username = '{}' and u.userid = c.userid),{})".format(user, wid[0][0])
+            fam = mysqlcon(kq)
+        else:
+            word = wordM[z][0]
+            resp = wordM[z][1]
+            wc = wordM[z][2]
+            prn = wordM[z][3]
+            wM=[word,resp,wc,prn]
+            new = wM
+            words[w]= new
+
+            print(wordM[z][0])
+            z+=1
+
+    n= 0 
+    for w in words:
+        Ws[n]=words[w][0]
+        Ms[n]=words[w][1]
+        WC[n]=words[w][2]
+        P[n]=words[w][3]
+        
+        n+=1
+
+            
+
+    if "user" in session:
+        user = session["user"]
+        print(user)
+        return render_template("index.html",W1 = Ws[0], W2 = Ws[1], W3 = Ws[2], W4 = Ws[3], W5 = Ws[4], W6 = Ws[5], W7 = Ws[6], W8 = Ws[7], W9 = Ws[8], W10 = Ws[9], M1 = Ms[0], M2 = Ms[1], M3 = Ms[2], M4 = Ms[3], M5 = Ms[4], M6 = Ms[5], M7 = Ms[6], M8 = Ms[7], M9 = Ms[8], M10 = Ms[9],WC1 = WC[0], WC2 = WC[1], WC3 = WC[2], WC4 = WC[3], WC5 = WC[4], WC6 = WC[5], WC7 = WC[6], WC8 = WC[7], WC9 = WC[8], WC10 = WC[9], P1  = P[0], P2  = P[1], P3  = P[2], P4  = P[3], P5  = P[4], P6  = P[5], P7  = P[6], P8  = P[7], P9  = P[8], P10  = P[9], user = user)
+    
+    
+
+
+@app.route('/index')
+def index():
+
+    if "user" not in session:
+        return redirect(url_for('home'))
+
+    genTenWords()
+    user = session["user"]
+     
+    n=0
+    for w in words:
+        wid = mysqlcon("select wordid from word where word='{}'".format(words[w][0]))
+        print(wid)
+        kq = "insert into rendered (cusid, wordid) value ((select cusid from customers c, users u where username = '{}' and u.userid = c.userid),{})".format(user, wid[0][0])
+        fam = mysqlcon(kq)
+    
+        Ws[n]=words[w][0]
+        Ms[n]=words[w][1]
+        WC[n]=words[w][2]
+        P[n]=words[w][3]
+        
+        n+=1
         
 
+
+    if "user" in session:
+        user = session["user"]
+        print(user)
+        return render_template("index.html",W1 = Ws[0], W2 = Ws[1], W3 = Ws[2], W4 = Ws[3], W5 = Ws[4], W6 = Ws[5], W7 = Ws[6], W8 = Ws[7], W9 = Ws[8], W10 = Ws[9], M1 = Ms[0], M2 = Ms[1], M3 = Ms[2], M4 = Ms[3], M5 = Ms[4], M6 = Ms[5], M7 = Ms[6], M8 = Ms[7], M9 = Ms[8], M10 = Ms[9],WC1 = WC[0], WC2 = WC[1], WC3 = WC[2], WC4 = WC[3], WC5 = WC[4], WC6 = WC[5], WC7 = WC[6], WC8 = WC[7], WC9 = WC[8], WC10 = WC[9], P1  = P[0], P2  = P[1], P3  = P[2], P4  = P[3], P5  = P[4], P6  = P[5], P7  = P[6], P8  = P[7], P9  = P[8], P10  = P[9], user = user)
+    else:
+        user = "Log In"
+        print(user)
+        return render_template("index.html",W1 = Ws[0], W2 = Ws[1], W3 = Ws[2], W4 = Ws[3], W5 = Ws[4], W6 = Ws[5], W7 = Ws[6], W8 = Ws[7], W9 = Ws[8], W10 = Ws[9], M1 = Ms[0], M2 = Ms[1], M3 = Ms[2], M4 = Ms[3], M5 = Ms[4], M6 = Ms[5], M7 = Ms[6], M8 = Ms[7], M9 = Ms[8], M10 = Ms[9],WC1 = WC[0], WC2 = WC[1], WC3 = WC[2], WC4 = WC[3], WC5 = WC[4], WC6 = WC[5], WC7 = WC[6], WC8 = WC[7], WC9 = WC[8], WC10 = WC[9], P1  = P[0], P2  = P[1], P3  = P[2], P4  = P[3], P5  = P[4], P6  = P[5], P7  = P[6], P8  = P[7], P9  = P[8], P10  = P[9], user = user)
+    
+
+@app.route('/lo')
+def logout():
+    p=session.pop('user')
+    return redirect(url_for('home'))
+    
 
 
 if __name__=='__main__':

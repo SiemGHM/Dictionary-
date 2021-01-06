@@ -404,6 +404,23 @@ form p{
 }
 
 
+.msg-col button{
+    display: inline-block;
+     text-decoration: none;
+     color: #555;
+     background: #fff;
+     font-size: 15px;
+     padding: 10px 35px;
+     border-radius: 30px;
+     margin-top:45px;
+     margin: 10px;
+     margin-left: 15px;
+     position: absolute;
+    bottom: 30px;
+    left: 70px;
+
+}
+
 
  /* table {
      width:60%;}
@@ -438,7 +455,7 @@ form p{
                     </ul>
                 </nav>
                 <div class="user">
-                    <a href="/login"><p>Log In</p></a>
+                    <a href="/login"><p>{{user}}</p></a>
                     <a href="/login"><img src="static/images/nopror.png"></a>
                 </div>
             </div>
@@ -458,10 +475,50 @@ form p{
     
 
     <script>
-        function knowIt() {
-            var word = document.getElementById('#w1')
-            console.log(word)
+        var word1 = document.getElementById('word1').innerHTML; 
+        function knowIt() {           
+            return word1
         }
+        document.getElementById('wo1').value = word1;
+
+
+        var word2 = document.getElementById('word2').innerHTML; 
+        
+        document.getElementById('wo2').value = word2;
+
+        var word3 = document.getElementById('word3').innerHTML; 
+        
+        document.getElementById('wo3').value = word3;
+
+        var word4 = document.getElementById('word4').innerHTML; 
+        
+        document.getElementById('wo4').value = word4;
+
+        var word5 = document.getElementById('word5').innerHTML; 
+        
+        document.getElementById('wo5').value = word5;
+
+        var word6 = document.getElementById('word6').innerHTML; 
+        
+        document.getElementById('wo6').value = word6;
+
+        var word7 = document.getElementById('word7').innerHTML; 
+        
+        document.getElementById('wo7').value = word7;
+
+        var word8 = document.getElementById('word8').innerHTML; 
+        
+        document.getElementById('wo8').value = word8;
+
+        var word9 = document.getElementById('word9').innerHTML; 
+        
+        document.getElementById('wo9').value = word9;
+
+        var word10 = document.getElementById('word10').innerHTML; 
+        
+        document.getElementById('wo10').value = word10;
+
+
     </script>
     </body>
 </html>

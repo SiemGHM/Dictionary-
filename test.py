@@ -1,6 +1,22 @@
 
-Wt1 = "<button name="subject" type="submit" value='{}'>Know It</button>".format(Ws[0]), Wt2 = "{}".format(Ws[1]), Wt3 = "{}".format(Ws[2]), Wt4 = "{}".format(Ws[3]), Wt5 ="{}".format(Ws[4]), Wt6 = "{}".format(Ws[5]), Wt7 = "{}".format(Ws[6]), Wt8 = "{}".format(Ws[7]), Wt9 = "{}".format(Ws[8]), Wt10 = "{}".format(Ws[9])
-<button name="subject" type="submit" value='{}'>Know It</button>
+
+
+import pymysql
+import json
+
+def mysqlcon(query):
+    conn = pymysql.connect( 
+        host='localhost', 
+        user='SiemGHM',  
+        password = "$iemGH12", 
+        db='dexdb',
+        autocommit=True 
+        )
+
+    cur = conn.cursor() 
+    cur.execute(query) 
+    output = cur.fetchall() 
+    return output
 # <script>
 #   $( function() {
 #     var availableTags = [
@@ -39,4 +55,10 @@ with open('dict.txt', 'r') as f:
     with open('siem.txt','a') as p:
         for i in f:
             i = i.strip()
-            print('"{}",'.format(i), end = "", file=p)
+            if "'" not in i:
+                q = 'Insert into wlist (word) value ("{}")'.format(i)
+                try:
+                    mysqlcon(q)
+                except:
+                    pass
+                

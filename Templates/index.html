@@ -43,12 +43,19 @@
             <div class="slide">
 
             <div class="msg-col">
-                <h1 id="w1"> {{W1}} <span class="pronoun">/{{P1}}/</span></h1>
+                <h1 id="w1"> <span id="word1">{{W1}}</span> <span class="pronoun">/{{P1}}/</span></h1>
                 <p class="wCaterory">  {{WC1}} </p>
                 <p>{{M1}}</p>
-                <div class="knowIt">
-                    <a href="" onclick="knowIt()">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo1">
+                    <button type="submit">Know It</button>
+                </form>
+                
+                    
+
+                        <!-- <button onclick="knowIt()" type="submit" value=knowIt() name="word1">Know it</button> -->
+                    
+                
             </div>
 
         </div>
@@ -58,12 +65,13 @@
         <div class="slide">
 
             <div class="msg-col">
-                <h1> {{W2}} <span class="pronoun">/{{P2}}/</span></h1>
+                <h1><span id="word2">{{W2}}</span> <span class="pronoun">/{{P2}}/</span></h1>
                 <p class="wCaterory">  {{WC2}} </p>
                 <p>{{M2}}</p>
-                <div class="knowIt">
-                    <a href="">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo2">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
         </div>
 
@@ -72,12 +80,13 @@
         <div class="slide">
 
             <div class="msg-col">
-                <h1> {{W3}} <span class="pronoun">/{{P3}}/</span></h1>
+                <h1><span id="word3"> {{W3}} </span><span class="pronoun">/{{P3}}/</span></h1>
                 <p class="wCaterory">  {{WC3}} </p>
                 <p>{{M3}}</p>
-                <div class="knowIt">
-                    <button name="subject" type="submit" value={{Wt3}}>Know It</button>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo3">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
 
         </div>
@@ -85,12 +94,13 @@
         <div class="slide">
 
             <div class="msg-col">
-                <h1> {{W4}} <span class="pronoun">/{{P4}}/</span></h1>
+                <h1><span id="word4">{{W4}}</span>  <span class="pronoun">/{{P4}}/</span></h1>
                 <p class="wCaterory">  {{WC4}} </p>
                 <p>{{M4}}</p>
-                <div class="knowIt">
-                    <a href="">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo4">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
         </div>
 
@@ -98,12 +108,13 @@
         <div class="slide">
 
             <div class="msg-col">
-                <h1> {{W5}} <span class="pronoun">/{{P5}}/</span> </h1>
+                <h1><span id="word5"> {{W5}} </span><span class="pronoun">/{{P5}}/</span> </h1>
                 <p class="wCaterory">  {{WC5}} </p>
                 <p>{{M5}}</p>
-                <div class="knowIt">
-                    <a href="">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo5">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
 
         </div>
@@ -112,24 +123,26 @@
         <div class="slide">    
             
             <div class="msg-col">
-                <h1> {{W6}} <span class="pronoun">/{{P6}}/</span></h1>
+                <h1><span id="word6">{{W6}}</span>  <span class="pronoun">/{{P6}}/</span></h1>
                 <p class="wCaterory">  {{WC6}} </p>
                 <p>{{M6}}</p>
-                <div class="knowIt">
-                    <a href="">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo6">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
         </div>
         
 
         <div class="slide">
             <div class="msg-col">
-                <h1> {{W7}} <span class="pronoun">/{{P7}}/</span></h1>
+                <h1><span id="word7"> {{W7}} </span><span class="pronoun">/{{P7}}/</span></h1>
                 <p class="wCaterory">  {{WC7}} </p>
                 <p>{{M7}}</p>
-                <div class="knowIt">
-                    <a href="">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo7">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
 
         </div>
@@ -137,12 +150,13 @@
         
         <div class="slide">
             <div class="msg-col">
-                <h1> {{W8}} <span class="pronoun">/{{P8}}/</span></h1>
+                <h1><span id="word8"> {{W8}} </span><span class="pronoun">/{{P8}}/</span></h1>
                 <p class="wCaterory">  {{WC8}} </p>
                 <p>{{M8}}</p>
-                <div class="knowIt">
-                    <a href="">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo8">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
 
         </div>
@@ -152,12 +166,13 @@
 
 
             <div class="msg-col">
-                <h1> {{W9}} <span class="pronoun">/{{P9}}/</span></h1>
+                <h1><span id="word9"> {{W9}} </span><span class="pronoun">/{{P9}}/</span></h1>
                 <p class="wCaterory">  {{WC9}} </p>
                 <p>{{M9}}</p>
-                <div class="knowIt">
-                    <a href="">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo9">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
         </div>
 
@@ -166,12 +181,13 @@
 
 
             <div class="msg-col">
-                <h1> {{W10}} <span class="pronoun">/{{P10}}/</span></h1>
+                <h1><span id="word10"> {{W10}}</span> <span class="pronoun">/{{P10}}/</span></h1>
                 <p class="wCaterory">  {{WC10}} </p>
                 <p>{{M10}}</p>
-                <div class="knowIt">
-                    <a href="">Know it</a>
-                </div>
+                <form action="/knowit" method="POST">
+                    <input type="hidden" name="word1" id="wo10">
+                    <button type="submit">Know It</button>
+                </form>
             </div>
         </div>
 
