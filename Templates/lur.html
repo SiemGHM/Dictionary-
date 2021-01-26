@@ -2,29 +2,32 @@
 {% block body %}
 
 
-<form autocomplete="off" method="POST" action='/lookupr'>
+
     <div class="autocomplete lur">
-      <input id="myInput" type="text" name="myCountry" placeholder="Search for a Word" class="gerier">
-      <input type='submit'>
+      <form id="myForm" autocomplete="off" method="POST" action='/lookupr'>
+        <input id="myInput" type="text" name="myCountry" placeholder="Search for a Word" class="gerier">
+        <input id="butty" value="Go" type='button' class='GBR'>
+      </form>
+      
       <div class = "dictresp" >
         
         {% for dict in res.results  %}
-        <h3>{{dict.word}}</h3>
+        <h3 class="mword">{{dict.word}}</h3>
         {% for dict1 in dict.lexicalEntries %} 
-        <p>{{dict1.lexicalCategory.text}}</p>
+        <p class="catword">{{dict1.lexicalCategory.text}}</p>
 
         {% for dict2 in dict1.entries %}
         {% for dict3 in dict2.senses %}
         {% for dict4 in dict3.definitions %}
 
         
-        <div>
+        <div class="mresp">
           {{dict4}}
         </div>
 
         {% for dict5 in dict4.subsenses %}
         <div>
-          {{ dict5.definition }}
+          <p>{{ dict5.definition }}</p>
         </div>        
 
 
@@ -37,11 +40,30 @@
       </div>
     </div>
     
-</form>
+
 
 
   
   <script>
+    
+    var baton = document.getElementById('butty');
+    baton.onclick = chek;
+    function chek() {
+      var req = document.getElementById('myInput').value;
+      if (req == ''){
+        alert('No words entered!')
+      }
+      else{
+        alert('I will get back to you soon!')
+        document.getElementById('myForm').submit();
+        
+      }
+    }
+
+
+
+
+
   function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
