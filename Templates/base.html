@@ -22,6 +22,9 @@ body,html
 
 
 .container {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 100%;
     height: 100vh;
     background-image: url(static/images/1.png);
@@ -167,6 +170,14 @@ nav ul li a{
      
  }
 
+ 
+
+
+.IPA h3 {
+    margin: 18px 0;
+    text-align: start;
+    margin-left: 50px;
+}
 
  .msg-col h1{
     font-family: "Times New Roman", Times, serif;
@@ -242,13 +253,29 @@ nav ul li a{
      font-size: 1.83vw;
      line-height: 4.5248vh;
  }
+.IPAcont {
+    z-index: 9789;
+    overflow: hidden;
 
+}
+
+.IPA::-webkit-scrollbar {
+    display: none;
+}
 
  .IPA {
+
+     position: absolute;
+     bottom: 0px;
+     width: 60vw;
+     margin: 0 15vw 0 15vw;
+     background-color: rgba(65, 65, 65, 0.386);
      color: #fff;
-     width: auto;
-     margin-left: 10%;
-     margin-right: 10%;
+    height: 55vh;
+     overflow: hidden;
+     z-index: 999;
+     overflow-y: scroll;
+     
      padding: 5%;
      /* background-color: rgba(30, 30, 50, 0.182); */
 
@@ -422,15 +449,61 @@ div .lur .gerier{
 
 
 .signup {
+    position: absolute;
     color: whitesmoke;
-    margin: 0 auto;
-    width: 60%;
+    top:8vh;
+    left: 35%;
+    width: 30vw;
+    height: 60vh;
     display: flex;
     flex-direction:column;
     align-items: center;
-    border: 4px black solid;
+    
     position: relative;
-    background-color: rgba(255, 255, 255, 0.082);
+    background-color: rgba(255, 255, 255, 0.092);
+    border-radius: 13px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.signup2 {
+    position: absolute;
+    color: whitesmoke;
+    top:6vh;
+    left: 32.5%;
+    width: 35vw;
+    height: 70vh;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.092);
+    border-radius: 13px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.benjamin {
+    font-family: inherit;
+    width: 10vw;
+    height: 6vh;
+    background-color: rgb(112, 106, 106);
+    outline: rgba(255, 255, 255, 0.082);
+    font-size: xx-large;
+    border-radius: 3vh ;
+    margin-bottom: 30px;
+}
+
+input[type=radio] {
+    /* position: absolute;
+    display: flex; */
+    padding: 0;
+    margin: 0;
+    border: 0px;
+    width: 100%;
+    height: 1.25em;
+    height:35px; width:35px; vertical-align: middle;
 }
 
 .signup h2{
@@ -455,6 +528,11 @@ form p{
     padding-right: 10px;
 }
 
+
+#myForm {
+    display: flex;
+}
+
 .user a{
     color: whitesmoke;
     text-decoration: none;
@@ -476,6 +554,20 @@ form p{
     bottom: 4.5248vh;
     left: 70px;
 
+}
+
+.LevelInp {
+    position: absolute;
+    display: flex;
+    width: 30vw;
+   
+    margin-left: -40px;
+    
+}
+label {
+    
+    margin: 0;
+    padding:0;
 }
 
 .mword {
@@ -502,7 +594,86 @@ form p{
     font-size:x-large;
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
 
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content p:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.some{
+    display: flex;
+    flex-direction: row;
+}
+
+.some p:first-child{
+    position: absolute;
+    top: 5px;
+    left: -38px;
+}
+
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1.2em;
+    font-family: sans-serif;
+    min-width: 650px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-left: 100px;
+}
+
+
+
+.styled-table thead tr {
+    background-color: #054153;
+    color: #ffffff;
+    text-align: left;
+   
+}
+
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #50323265;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #63726f;
+}
+
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #184905;
+}
  /* table {
      width:60%;}
 
@@ -528,8 +699,7 @@ form p{
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Library</a></li>
+                        
                         <li><a href="/IPA">IPA</a></li>
                         <li><a href="">Contact</a></li>
         
@@ -537,11 +707,29 @@ form p{
                 </nav>
                 <div class="user">
                     {% if user %}
-                    <p>{{user}}</p>
-                    <img src="static/images/nopror.png">
+                    <div class="dropdown">
+                        <div class="some">
+                            <p>{{user}}</p>
+                            <img src="static/images/nopror.png">
+                        </div>
+                        <div class="dropdown-content">
+                                <a href="/lo">Logout</a>
+                                <a href="/prof">Profile</a>
+                        </div>
+                            
+                        </div>
                     {% else %}
-                    <a href='/login'><p>Log In</p></a>
-                    <a href="/login"><img src="static/images/nopror.png"></a>
+                    <!-- <div class="ddcon">
+                        <a href='/login'><p>Log In</p></a>
+                        <a href="/login"><img src="static/images/nopror.png"></a>
+                        <div class="dropdown">
+                            <a href="/lo">Logout</a>
+                            <a href="/prof">Profile</a>
+                        </div>
+                    </div> -->
+                            <a href='/login'><p>Log In</p></a>
+                            <a href="/login"><img src="static/images/nopror.png"></a>
+                       
                     {% endif %}
                 </div>
             </div>

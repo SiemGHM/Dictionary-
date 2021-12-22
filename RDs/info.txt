@@ -1,0 +1,8 @@
+Instance: database-1
+username: SiemSGM
+pass:
+host: database-1.cp2yhiiajs4r.us-east-2.rds.amazonaws.com
+port: 3306
+
+
+9dddnJbLcF44kyQx2KTT0w

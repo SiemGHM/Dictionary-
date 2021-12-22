@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body%}
+
+<div class='signup'>
+    <form autocomplete="off" method="POST" action='/loginr'>
+        <h2>LOG IN</h2>
+       
+        <p>Email: </p>
+        <input class="myInput" type="email" name='email' required>
+        <p>Password: </p>
+        <input class="myInput" type="password" name = 'password' required><br>
+        <input class="benjamin" type="submit">
+    </form>
+
+    <p style="font-size: larger;">Don't have account? Sign Up <a style="text-decoration: none;" href='/signup'>here.</a></p>
+    
+</div>
+
+{% endblock %}

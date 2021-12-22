@@ -6,6 +6,8 @@ import json
 import random
 import time
 import api
+import schedule
+import time
 
 
 app_id = api.apiid
@@ -101,10 +103,10 @@ def dictDB(word):
 
 
 def signupdb(name, lname, username, email, password, level):
-    query = "insert into users (username,email, passwd) values ('{}','{}','{}',{})".format(username, email, password)
+    query = "insert into users (username,email, passwd) values ('{}','{}','{}')".format(username, email, password)
     ex = mysqlcon(query)
     uID = mysqlcon("select UserID from users where username='{}'".format(username))
-    query = "insert into Customers (UserID, fname, lname, lvl) values ('{}','{}','{}')".format(uID[0][0],name, lname, level)
+    query = "insert into Customers (UserID, fname, lname, lvl) values ({},'{}','{}', '{}')".format(int(uID[0][0]),name, lname, level)
     ex = mysqlcon(query)
 
 
@@ -236,7 +238,7 @@ def getWord(wordin = None):
 def genTenWords(user = None):
 
     if not user:
-            ws = "SELECT word FROM wlist AS t1 JOIN (SELECT wlid FROM wlist ORDER BY RAND() LIMIT 10) as t2 ON t1.wlid=t2.wlid"
+            ws = "SELECT word FROM wlist AS t1 JOIN (SELECT wlid FROM wlist where level={} ORDER BY RAND() LIMIT 10) as t2 ON t1.wlid=t2.wlid".format(6)
     else:
         qli = "select u.userid, c.lvl from users u, customers c where c.userid=u.userid and u.username ='{}'".format(user)
         ql = mysqlcon(qli)
@@ -318,10 +320,10 @@ def lookupr():
     rescode=int(str(r.status_code).strip())
     res = json.loads(answer)
 
-    if rescode != 404:
+    if rescode == 200:
         return render_template("lur.html", response = res["results"][0]["lexicalEntries"][0]['entries'][0]['senses'][0]['definitions'],res=res)
     else:
-        return render_template("lur.html")
+        return render_template("message.html", message="Word Not Found!")
 
 
 
@@ -494,5 +496,8 @@ if __name__=='__main__':
 
 
 #================================================Test Commands====================================================
+schedule.every().day.at("10:30").do(genTenWords)
 
-
+while True:
+    schedule.run_pending()
+    time.sleep(1)

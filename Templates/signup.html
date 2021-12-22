@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block body%}
+<div class='signup2'>
+    <form autocomplete="off" method="POST" action='/signupr'>
+        <h2>SIGN UP</h2>
+        <p>Name: </p>
+        <input class="myInput" type="text" name='fname' pattern="[A-Za-z0-9]+" required>
+        <p>Last Name: </p>
+        <input class="myInput" type="text" name='lname' pattern="[A-Za-z0-9]+" required>
+        <p>Username:</p>
+        <input class="myInput" type="text" name='username' pattern="[A-Za-z0-9]+" required>
+        
+        <p>Email: </p>
+        <input class="myInput" type="text" name='email' required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        <p>Password: </p>
+        <input class="myInput" type="password" name = 'password' required>
+        <p style="padding-bottom: 5px;">Level:</p>
+        <div style="" class="LevelInp">
+        
+        <input class="myInput" type="radio" name='level' value="1" required="required">
+        <label for='1'>1</label>
+        <input class="myInput" type="radio" name='level' value="2" required="required">
+        <label for='2'>2</label>
+        <input class="myInput" type="radio" name='level' value="3" required="required">
+        <label for='3'>3</label>
+        <input class="myInput" type="radio" name='level' value="4" required="required">
+        <label for='4'>4</label>
+        <input class="myInput" type="radio" name='level' value="5" required="required">
+        <label for='5'>5</label>
+        <input class="myInput" type="radio" name='level' value="6" required="required">
+        <label for='6'>GRE</label>
+        </div>
+        <br>
+        <br>
+        
+
+        <input class="benjamin" type="submit">
+    </form>
+    
+</div>
+
+{% endblock %}
